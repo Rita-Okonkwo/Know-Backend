@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc74d681-72b9-47ec-80c1-d578ee0d932b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knowcovid.db" beforeDir="false" afterPath="$PROJECT_DIR$/knowcovid.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,15 +49,18 @@
     </task>
     <servers />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="requirements.txt" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="448" y="167" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1592685582934">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="448" y="167" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.728@0.0.1366.728" timestamp="1592685582934" />
-    <state x="184" y="6" key="SettingsEditor" timestamp="1591532180192">
+    <state x="184" y="6" key="SettingsEditor" timestamp="1592688390981">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1591532180192" />
+    <state x="184" y="6" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1592688390981" />
     <state x="379" y="188" key="com.intellij.ide.util.TipDialog" timestamp="1592684089845">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
