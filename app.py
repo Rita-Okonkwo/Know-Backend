@@ -35,8 +35,8 @@ def db_drop():
 @app.cli.command('db_seed')
 def db_seed():
     video1 = Videos(
-        video_url='https://www.youtube.com/watch?v=adB8RW4I3o4',
-        description='How to wear a mask'
+        video_url='https://www.youtube.com/watch?v=1APwq1df6Mw',
+        description='How to protect yourself against COVID-19'
     )
     db.session.add(video1)
     db.session.commit()
