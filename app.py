@@ -34,11 +34,34 @@ def db_drop():
 # seed database
 @app.cli.command('db_seed')
 def db_seed():
-    video1 = Videos(
-        video_url='https://www.youtube.com/watch?v=1APwq1df6Mw',
-        description='How to protect yourself against COVID-19'
+    question = Question(
+        question='Are antibiotics effective in preventing or treating COVID-19?'
     )
-    db.session.add(video1)
+    answer1 = Answer(
+        answer='No. Antibiotics do not work against viruses',
+        correct=True,
+        question=question
+    )
+    answer2 = Answer(
+        answer='Yes. Antibiotics work against viruses',
+        correct=False,
+        question=question
+    )
+    answer3 = Answer(
+        answer="Yes, when the antibiotics are combined with good food",
+        correct=False,
+        question=question
+    )
+    answer4 = Answer(
+        answer='None of the above',
+        correct=False,
+        question=question
+    )
+    db.session.add(question)
+    db.session.add(answer1)
+    db.session.add(answer2)
+    db.session.add(answer3)
+    db.session.add(answer4)
     db.session.commit()
     print('Database seeded')
 
