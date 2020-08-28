@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from flask_marshmallow import Marshmallow
 from marshmallow import Schema, fields
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 import os
 
 from sqlalchemy.orm import relationship
@@ -10,10 +11,12 @@ from sqlalchemy.orm import relationship
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'knowcovid.db')
-
+app.config['JWT_SECRET_KEY'] = 'super_secret'
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+jwt = JWTManager(app)
+
 
 # create the database
 
@@ -85,12 +88,56 @@ def videos():
     return jsonify(result)
 
 
+@app.route('/register', methods=['POST'])
+def register():
+    user_name = request.json['user_name']
+    test = User.query.filter_by(user_name=user_name).first()
+    if test:
+        return jsonify(message='This username already exists'), 409
+    else:
+        email = request.json['email']
+        password = request.json['password']
+        user = User(user_name=user_name, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(message='User has been successfully created'), 201
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.json['email']
+    password = request.json['password']
+    test = User.query.filter_by(email=email, password=password).first()
+    if test:
+        access_token = create_access_token(identity=email)
+        return jsonify(message='Login succeeded!', access_token=access_token)
+    else:
+        return jsonify(message='Bad email or password'), 401
+
+
+@app.route('/leaderboard', methods=['POST'])
+def leaderboard():
+    user_name = request.json['username']
+    score = request.json['score']
+    test = LeaderBoard.query.filter_by(user_name=user_name).first()
+    if test:
+        test.score = score
+    else:
+        new_user = LeaderBoard(user_name=user_name, score=score)
+        db.session.add(new_user)
+        db.session.commit()
+    leaderboard = LeaderBoard.query.all()
+    result = leaderboard_schema.dump(leaderboard)
+    return jsonify(result)
+
+
+
 # database models
+
 class User(db.Model):
     __tablename__ = 'users'
     user_id = Column(Integer, primary_key=True)
-    first_name = Column(String)
-    last_name = Column(String)
+    user_name = Column(String)
     email = Column(String, unique=True)
     password = Column(String)
 
@@ -117,6 +164,13 @@ class Videos(db.Model):
     description = Column(String)
 
 
+class LeaderBoard(db.Model):
+    __tablename__ = 'leaderBoard'
+    board_id = Column(Integer, primary_key=True)
+    user_name = Column(String)
+    score = Column(Integer)
+
+
 # define marshmallow schema for serialization
 class UserSchema(ma.Schema):
     class Meta:
@@ -138,10 +192,14 @@ class VideosSchema(ma.Schema):
         fields = ('id', 'video_url', 'description')
 
 
+class LeaderBoardSchema(ma.Schema):
+    class Meta:
+        fields = ('board_id', 'user_name', 'score')
+
+
 users_schema = UserSchema(many=True)
 questions_schema = QuestionSchema(many=True)
 videos_schema = VideosSchema(many=True)
+leaderboard_schema = LeaderBoardSchema(many=True)
 if __name__ == '__main__':
     app.run()
-
-
