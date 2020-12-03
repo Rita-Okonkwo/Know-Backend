@@ -12,7 +12,7 @@ The Backend for the Know android application built using Flask
 - How to build an API using Python(Flask)
 
 ## Links
-- [Know Android Applican Repo](https://github.com/Rita-Okonkwo/Know-Android) 
+- [Know Android Application Repo](https://github.com/Rita-Okonkwo/Know-Android) 
 
 ## License
 ```
